@@ -1,7 +1,14 @@
 {
   "name": "nextjs-flash-message",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Send temporary data after redirect",
+  "keywords": [
+    "nextjs",
+    "flash",
+    "message",
+    "toast",
+    "notification"
+  ],
   "homepage": "https://github.com/ftognetto/next-flash-message#readme",
   "bugs": {
     "url": "https://github.com/ftognetto/next-flash-message/issues"
@@ -12,20 +19,36 @@
   },
   "license": "ISC",
   "author": "fabrizio tognetto <fabriziotognetto@gmail.com>",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "readme.md"
   ],
   "scripts": {
-    "build": "tsup",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "build:esm": "tsc",
+    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run prettier && npm run lint",
+    "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
+    "test": ""
   },
   "devDependencies": {
-    "@types/react": "^18",
+    "@types/react": "^18.3.11",
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "prettier": "^3.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "ts-node": "^10.9.2",
-    "tsup": "^8.3.0",
     "typescript": "^5.6.2"
   },
   "peerDependencies": {
