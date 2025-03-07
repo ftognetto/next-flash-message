@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers'
 import { FlashMessageClient } from './flash-message-client'
 
-export function FlashMessage() {
-  const _cookies = cookies().getAll()
+export async function FlashMessage() {
+  const _cookies = (await cookies()).getAll()
   const flash = _cookies.filter((c) => c.name.startsWith('flash-'))
   return (
     <>
@@ -11,9 +11,10 @@ export function FlashMessage() {
   )
 }
 
-export function setFlash(flash: { type: 'success' | 'error'; message: string }) {
+export async function setFlash(flash: { type: 'success' | 'error'; message: string }) {
+  const _cookies = await cookies()
   const timestamp = Date.now()
-  cookies().set(`flash-${timestamp}`, JSON.stringify({ ...flash, timestamp }), {
+  _cookies.set(`flash-${timestamp}`, JSON.stringify({ ...flash, timestamp }), {
     //path: '/' + timestamp,
     expires: new Date(Date.now() + 10 * 1000),
   })
